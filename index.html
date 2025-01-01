@@ -333,6 +333,20 @@
                     <div class="px-4 py-5 sm:p-6">
                         <h3 class="text-center text-2xl font-semibold text-gray-900">Get Early Access</h3>
                         <form id="signup-form" class="mt-5 space-y-4">
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <input type="text" 
+                                       id="firstName" 
+                                       name="firstName" 
+                                       required 
+                                       class="block w-full text-lg py-6 px-4 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" 
+                                       placeholder="First Name">
+                                <input type="text" 
+                                       id="lastName" 
+                                       name="lastName" 
+                                       required 
+                                       class="block w-full text-lg py-6 px-4 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" 
+                                       placeholder="Last Name">
+                            </div>
                             <input type="email" 
                                    id="email" 
                                    name="email" 
@@ -356,6 +370,8 @@
     <script>
         document.getElementById('signup-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
             const email = document.getElementById('email').value;
 
             try {
@@ -364,7 +380,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email }),
+                    body: JSON.stringify({ firstName, lastName, email }),
                 });
 
                 if (response.ok) {
@@ -377,6 +393,8 @@
                             background: "linear-gradient(to right, #4CAF50, #45a049)",
                         }
                     }).showToast();
+                    document.getElementById('firstName').value = '';
+                    document.getElementById('lastName').value = '';
                     document.getElementById('email').value = '';
                 } else {
                     throw new Error('Submission failed');

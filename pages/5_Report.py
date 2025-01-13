@@ -34,10 +34,10 @@ if not st.session_state.get("authenticated", False):
 def check_prerequisites():
     """Check if all required artifacts are ready."""
     try:
-        # Check documents
-        docs = supabase.table("user_documents").select("*").eq("user_id", st.session_state.user.id).execute()
-        has_cv = any(d["document_type"] == "cv" for d in docs.data)
-        has_transcript = any(d["document_type"] == "transcript" for d in docs.data)
+        # Check document analyses
+        analyses = supabase.table("document_analysis").select("*").eq("user_id", st.session_state.user.id).eq("status", "complete").execute()
+        has_cv = any(d["document_type"] == "cv" for d in analyses.data)
+        has_transcript = any(d["document_type"] == "transcript" for d in analyses.data)
         
         # Check questionnaire
         questionnaire = supabase.table("questionnaire_responses").select("*").eq("user_id", st.session_state.user.id).execute()
@@ -65,8 +65,12 @@ def check_prerequisites():
 def load_artifacts():
     """Load all artifacts needed for report generation."""
     try:
-        # Load documents
-        documents = supabase.table("user_documents").select("*").eq("user_id", st.session_state.user.id).execute()
+        # Load parsed document analyses
+        analyses = supabase.table("document_analysis") \
+            .select("*") \
+            .eq("user_id", st.session_state.user.id) \
+            .eq("status", "complete") \
+            .execute()
         
         # Load questionnaire
         questionnaire = supabase.table("questionnaire_responses").select("*").eq("user_id", st.session_state.user.id).execute()
@@ -82,7 +86,7 @@ def load_artifacts():
             qa_responses = None
         
         return {
-            "documents": documents.data,
+            "parsed_documents": analyses.data,  # Changed from documents to parsed_documents
             "questionnaire": questionnaire.data[0] if questionnaire.data else None,
             "summary": summary.data[0] if summary.data else None,
             "qa_session": {
@@ -109,7 +113,7 @@ def generate_section(template_section, artifacts):
         # Format context from artifacts
         context = f"""
         Documents:
-        {json.dumps(artifacts['documents'], indent=2)}
+        {json.dumps(artifacts['parsed_documents'], indent=2)}
         
         Questionnaire Responses:
         {json.dumps(artifacts['questionnaire'], indent=2)}
@@ -139,28 +143,50 @@ def generate_section(template_section, artifacts):
 def save_report(template, content, artifacts):
     """Save generated report."""
     try:
-        # Format artifacts reference
+        # Debug logging
+        print("\nArtifacts received:")
+        print(json.dumps(artifacts, indent=2))
+        
+        # Validate required fields
+        if not artifacts["parsed_documents"]:
+            raise ValueError("No parsed documents found")
+        if not artifacts["questionnaire"]:
+            raise ValueError("No questionnaire data found")
+        if not artifacts["summary"]:
+            raise ValueError("No summary data found")
+        if not artifacts["qa_session"]["session"]:
+            raise ValueError("No Q&A session found")
+            
+        # Build document analyses reference
+        doc_analyses = {}
+        for doc in artifacts["parsed_documents"]:
+            if "document_type" not in doc or "id" not in doc:
+                print(f"Skipping invalid document: {doc}")
+                continue
+            doc_analyses[doc["document_type"]] = {
+                "id": doc["id"],
+                "version": doc.get("created_at"),
+                "status": doc.get("status", "complete")
+            }
+        
+        # Build artifacts reference
         artifacts_ref = {
-            "documents": {
-                doc["document_type"]: {
-                    "id": doc["id"],
-                    "version": doc["created_at"]
-                } for doc in artifacts["documents"]
-            },
+            "document_analyses": doc_analyses,
             "questionnaire": {
                 "id": artifacts["questionnaire"]["id"],
-                "version": artifacts["questionnaire"]["created_at"]
+                "version": artifacts["questionnaire"].get("created_at")
             },
             "summary": {
                 "id": artifacts["summary"]["id"],
-                "version": artifacts["summary"]["version"]
+                "version": artifacts["summary"].get("version")
             },
             "qa_session": {
                 "id": artifacts["qa_session"]["session"]["id"],
-                "completed_at": artifacts["qa_session"]["session"]["updated_at"]
+                "completed_at": artifacts["qa_session"]["session"].get("updated_at")
             }
         }
         
+        # Prepare and save data
         data = {
             "user_id": st.session_state.user.id,
             "template_id": template["id"],
@@ -172,7 +198,9 @@ def save_report(template, content, artifacts):
         
         result = supabase.table("reports").insert(data).execute()
         return result.data[0] if result.data else None
+        
     except Exception as e:
+        print(f"Error saving report: {str(e)}")
         st.error(f"Error saving report: {str(e)}")
         return None
 

@@ -51,12 +51,12 @@ def render_strategic_qa_section(supabase):
             
             # Option to start new session
             if st.button("Start New Q&A Session", use_container_width=True):
-                st.switch_page("pages/3_Strategic_QA.py")
+                st.switch_page("pages/4_Strategic_QA.py")
                 
         else:
             st.info("No responses found for this session.", icon="ℹ️")
             if st.button("Start New Q&A Session", use_container_width=True):
-                st.switch_page("pages/3_Strategic_QA.py")
+                st.switch_page("pages/4_Strategic_QA.py")
     else:
         # Check for in-progress session
         in_progress = (supabase.table("strategic_qa_sessions")
@@ -80,8 +80,8 @@ def render_strategic_qa_section(supabase):
             st.progress(completed / total, f"Completed {completed} of {total} questions")
             
             if st.button("Continue Q&A Session", use_container_width=True):
-                st.switch_page("pages/3_Strategic_QA.py")
+                st.switch_page("pages/4_Strategic_QA.py")
         else:
             st.info("You haven't started the Strategic Q&A yet.", icon="ℹ️")
             if st.button("Begin Strategic Q&A", use_container_width=True):
-                st.switch_page("pages/3_Strategic_QA.py")
+                st.switch_page("pages/4_Strategic_QA.py")

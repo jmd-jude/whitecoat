@@ -31,23 +31,36 @@ if not st.session_state.get("authenticated", False):
     st.stop()
 
 def load_user_data():
-    """Load user's CV, transcript, and questionnaire responses."""
+    """Load user's parsed document data and questionnaire responses."""
     try:
-        # Load documents
-        documents = supabase.table("user_documents").select("*").eq("user_id", st.session_state.user.id).execute()
+        # Load parsed document analysis
+        analyses = supabase.table("document_analysis") \
+            .select("document_type, parsed_data") \
+            .eq("user_id", st.session_state.user.id) \
+            .eq("status", "complete") \
+            .execute()
         
         # Load questionnaire responses
-        responses = supabase.table("questionnaire_responses").select("responses").eq("user_id", st.session_state.user.id).execute()
+        responses = supabase.table("questionnaire_responses") \
+            .select("responses") \
+            .eq("user_id", st.session_state.user.id) \
+            .execute()
         
-        if not documents.data:
-            st.error("Please upload your CV and transcript first.")
+        if not analyses.data:
+            st.error("Please upload and complete document analysis first.")
             st.stop()
             
         if not responses.data:
             st.error("Please complete the questionnaire first.")
             st.stop()
             
-        return documents.data, responses.data[0]["responses"]
+        # Format data for GPT
+        documents = {
+            analysis["document_type"]: analysis["parsed_data"]
+            for analysis in analyses.data
+        }
+            
+        return documents, responses.data[0]["responses"]
     except Exception as e:
         st.error(f"Error loading user data: {str(e)}")
         st.stop()
@@ -74,13 +87,10 @@ def generate_initial_summary(documents, questionnaire_responses):
     """Generate initial summary using OpenAI."""
     try:
         # Format the context for OpenAI
-        context = f"""
-        Documents:
-        {json.dumps(documents, indent=2)}
-        
-        Questionnaire Responses:
-        {json.dumps(questionnaire_responses, indent=2)}
-        """
+        context = {
+            "documents": documents,  # Now using pre-parsed structured data
+            "questionnaire": questionnaire_responses
+        }
         
         # Generate summary using OpenAI
         response = openai_client.chat.completions.create(
@@ -92,8 +102,15 @@ def generate_initial_summary(documents, questionnaire_responses):
                 3. Clinical exposure and future plans
                 4. Key priorities and goals
                 
-                Format the summary as a personalized message that confirms understanding of their situation and asks if they'd like to clarify anything."""},
-                {"role": "user", "content": context}
+                Format the summary as a personalized message that confirms understanding of their situation and asks if they'd like to clarify anything.
+                
+                The documents are provided in a structured format with:
+                - CV data (education, research, clinical, leadership)
+                - Transcript data (courses, grades, GPA)
+                - Questionnaire responses
+                
+                Use this structured data to create a more accurate and detailed summary."""},
+                {"role": "user", "content": json.dumps(context, indent=2)}
             ],
             temperature=0.7
         )
@@ -160,21 +177,23 @@ def handle_revision_chat(current_summary):
         # Add user message
         st.session_state.messages.append({"role": "user", "content": prompt})
         
-        # Prepare context
-        context = f"""
-        Current summary:
-        {current_summary['summary']}
+        # Load current data for context
+        documents, responses = load_user_data()
         
-        User feedback:
-        {prompt}
-        """
+        # Prepare context
+        context = {
+            "current_summary": current_summary["summary"],
+            "user_feedback": prompt,
+            "documents": documents,
+            "questionnaire": responses
+        }
         
         # Get AI response
         response = openai_client.chat.completions.create(
             model=AI_MODEL,
             messages=[
-                {"role": "system", "content": "You are an expert pre-med advisor helping to revise a profile summary. Acknowledge the feedback and suggest specific revisions to the summary."},
-                {"role": "user", "content": context}
+                {"role": "system", "content": "You are an expert pre-med advisor helping to revise a profile summary. Use the structured document data and questionnaire responses to provide accurate revisions."},
+                {"role": "user", "content": json.dumps(context, indent=2)}
             ],
             temperature=0.7
         )
@@ -187,8 +206,8 @@ def handle_revision_chat(current_summary):
         revised_summary = openai_client.chat.completions.create(
             model=AI_MODEL,
             messages=[
-                {"role": "system", "content": "Based on the conversation, generate an updated version of the summary incorporating the user's feedback."},
-                {"role": "user", "content": context}
+                {"role": "system", "content": "Based on the conversation and structured data, generate an updated version of the summary incorporating the user's feedback."},
+                {"role": "user", "content": json.dumps(context, indent=2)}
             ],
             temperature=0.7
         )
@@ -260,7 +279,7 @@ if current_summary:
             
             with col2:
                 if st.button("Proceed to Q&A"):
-                    st.switch_page("pages/3_Strategic_QA.py")
+                    st.switch_page("pages/4_Strategic_QA.py")
 
 else:
     # No summary exists yet

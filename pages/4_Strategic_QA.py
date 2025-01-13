@@ -71,17 +71,31 @@ def get_session_responses(session_id):
 def generate_question(approved_summary, question_number, previous_responses=None):
     """Generate next strategic question based on context."""
     try:
-        # Format context
-        context = f"""
-        Approved Profile Summary:
-        {approved_summary['summary']}
-        """
+        # Load parsed documents
+        analyses = supabase.table("document_analysis") \
+            .select("document_type, parsed_data") \
+            .eq("user_id", st.session_state.user.id) \
+            .eq("status", "complete") \
+            .execute()
+            
+        # Format context properly
+        context = {
+            "summary": approved_summary['summary'],
+            "parsed_documents": analyses.data,
+            "previous_responses": previous_responses if previous_responses else []
+        }
         
-        if previous_responses:
-            context += f"""
-            Previous Questions and Answers:
-            {json.dumps(previous_responses, indent=2)}
-            """
+        # Convert context to formatted string
+        context_str = f"""
+        Approved Profile Summary:
+        {context['summary']}
+        
+        Analyzed Documents:
+        {json.dumps(context['parsed_documents'], indent=2)}
+        
+        Previous Questions and Answers:
+        {json.dumps(context['previous_responses'], indent=2)}
+        """
         
         # System prompts for each question
         prompts = {
@@ -95,7 +109,7 @@ def generate_question(approved_summary, question_number, previous_responses=None
             model=AI_MODEL,
             messages=[
                 {"role": "system", "content": prompts[question_number]},
-                {"role": "user", "content": context}
+                {"role": "user", "content": context_str}
             ],
             temperature=0.7
         )
@@ -109,12 +123,23 @@ def generate_question(approved_summary, question_number, previous_responses=None
 def analyze_response(question, answer, approved_summary):
     """Analyze user's response and provide insights."""
     try:
+        # Load parsed documents
+        analyses = supabase.table("document_analysis") \
+            .select("document_type, parsed_data") \
+            .eq("user_id", st.session_state.user.id) \
+            .eq("status", "complete") \
+            .execute()
+            
+        # Format context with all available information
         context = f"""
         Question: {question}
         User's Response: {answer}
         
         Profile Summary:
         {approved_summary['summary']}
+        
+        Analyzed Documents:
+        {json.dumps(analyses.data, indent=2)}
         """
         
         response = openai_client.chat.completions.create(
@@ -171,8 +196,8 @@ st.title("Strategic Q&A Discussion")
 approved_summary = get_approved_summary()
 if not approved_summary:
     st.error("Please complete and approve your profile summary first.")
-    if st.button("Return to Summary"):
-        st.switch_page("pages/2_Summary.py")
+    if st.button("Return to Profile"):
+        st.switch_page("pages/3_Profile.py")
     st.stop()
 
 # Show approved summary in expander
@@ -235,14 +260,17 @@ if current_q <= 3:
                     if "current_question" in st.session_state:
                         del st.session_state.current_question
                     
-                    # Show next step
+                    # Handle next step
                     if current_q < 3:
                         if st.button("Continue to Next Question"):
                             st.rerun()
                     else:
-                        if st.button("Complete Discussion"):
-                            if complete_session(qa_session["id"]):
-                                st.success("✅ Strategic Discussion Complete")
+                        # Automatically complete session after third response
+                        if complete_session(qa_session["id"]):
+                            st.success("✅ Strategic Discussion Complete! You can now proceed to generate your final report.")
+                            if st.button("Generate Final Report"):
+                                st.switch_page("pages/5_Report.py")
+                            else:
                                 st.rerun()
 
 else:
@@ -258,4 +286,4 @@ else:
     
     # Option to generate report
     if st.button("Generate Final Report"):
-        st.switch_page("pages/4_Report.py")
+        st.switch_page("pages/5_Report.py")

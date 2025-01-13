@@ -1,1 +1,1 @@
-# Make components directory a Python package
+# Initialize components package

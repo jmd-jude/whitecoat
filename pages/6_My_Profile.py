@@ -93,7 +93,7 @@ if initial_complete:
     """, icon="✅")
     
     if st.button("View Initial Profile Summary", use_container_width=True):
-        st.switch_page("pages/2_Profile.py")
+        st.switch_page("pages/3_Profile.py")
 else:
     st.info("""
     Your initial profile summary will be available after:
@@ -126,7 +126,7 @@ if all_complete:
     """, icon="✅")
     
     if st.button("View PreMed Report", use_container_width=True):
-        st.switch_page("pages/4_Report.py")
+        st.switch_page("pages/5_Report.py")
 else:
     st.info("""
     Your final PreMed Report will be available after completing:

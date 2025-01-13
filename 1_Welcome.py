@@ -32,7 +32,7 @@ if not st.session_state.get("authenticated"):
 else:
     # Get user's name from metadata
     user = st.session_state.user
-    user_name = user.user_metadata.get("first_name", "there")
+    user_name = user.user_metadata.get("first_name", "Friend")
 
     st.title("WHITECOAT")
 
@@ -51,21 +51,6 @@ else:
 
     Ready to begin? Let's build your profile together!
     """)
-
-    # Action buttons
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        if st.button("📄 Upload Transcript", use_container_width=True):
-            st.switch_page("pages/2_Document_Upload.py")  # Updated path
-
-    with col2:
-        if st.button("📝 Upload Resume", use_container_width=True):
-            st.switch_page("pages/2_Document_Upload.py")  # Updated path
-
-    with col3:
-        if st.button("❓ Begin Questionnaire", use_container_width=True):
-            st.switch_page("pages/2_Questionnaire.py")
 
     # Progress tracker
     st.write("---")
@@ -94,6 +79,4 @@ else:
     
     # Show next step if all complete
     if has_transcript and has_resume and has_questionnaire:
-        st.success("✅ All items complete!")
-        if st.button("Continue to Profile Summary"):
-            st.switch_page("pages/2_Profile.py")
+        st.success("✅ All items complete! Please proceed to Profile Summary in the navigation menu.")

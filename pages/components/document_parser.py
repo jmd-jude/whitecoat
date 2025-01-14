@@ -1,7 +1,7 @@
 from typing import Dict, Any, Tuple
 import json
 from openai import OpenAI
-import pypdf2 as PyPDF2  # Alias for compatibility
+import PyPDF2
 from io import BytesIO
 import os
 from dotenv import load_dotenv

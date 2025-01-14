@@ -16,6 +16,7 @@ supabase: Client = create_client(
 
 # Initialize OpenAI client
 openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+AI_MODEL_4o = os.getenv("AI_MODEL_4o", "gpt-4")
 AI_MODEL = os.getenv("AI_MODEL", "gpt-4o")
 
 # Page config
@@ -86,7 +87,7 @@ def load_artifacts():
             qa_responses = None
         
         return {
-            "parsed_documents": analyses.data,  # Changed from documents to parsed_documents
+            "parsed_documents": analyses.data,
             "questionnaire": questionnaire.data[0] if questionnaire.data else None,
             "summary": summary.data[0] if summary.data else None,
             "qa_session": {
@@ -127,12 +128,12 @@ def generate_section(template_section, artifacts):
         
         # Generate section content
         response = openai_client.chat.completions.create(
-            model=AI_MODEL,
+            model=AI_MODEL_4o,
             messages=[
                 {"role": "system", "content": template_section["prompt"]},
                 {"role": "user", "content": context}
             ],
-            temperature=0.7
+            temperature=0.1
         )
         
         return response.choices[0].message.content
@@ -239,34 +240,27 @@ if report and report["status"] == "draft":
             st.write(section["content"])
     
     # Finalize option
-    st.write("### Finalize Report")
-    st.write("Review the report above and click below to finalize it.")
-    if st.button("✅ Finalize Report"):
+    st.write("### Save Profile")
+    st.write("Review the profile above and click below to save it.")
+    if st.button("✅ Finalize profile"):
         if finalize_report(report["id"]):
-            st.success("Report finalized!")
+            st.success("Profile saved!")
             st.rerun()
     
     # Regenerate option
-    if st.button("🔄 Regenerate Report"):
+    if st.button("🔄 Regenerate Profile"):
         # Clear report from session state
         if "current_report" in st.session_state:
             del st.session_state.current_report
         st.rerun()
 
 elif report and report["status"] == "final":
-    st.success("✅ Final Report")
+    st.success("✅ Final Profile")
     
     # Show report sections
     for section in report["content"]["sections"]:
         with st.expander(section["name"], expanded=True):
             st.write(section["content"])
-    
-    # Option to generate new report
-    if st.button("Generate New Report"):
-        # Clear report from session state
-        if "current_report" in st.session_state:
-            del st.session_state.current_report
-        st.rerun()
 
 else:
     # Check prerequisites
@@ -297,20 +291,20 @@ else:
     ])
 
     if not all_ready:
-        st.error("Please complete all prerequisites before generating your report.")
+        st.error("Please complete all prerequisites before generating your profile.")
         st.stop()
 
     # Load template
     template = get_active_template()
     if not template:
-        st.error("No active report template found.")
+        st.error("No active profile template found.")
         st.stop()
 
     # Show generation options
-    st.write("### Report Generation")
-    st.write("Ready to generate your PreMed Profile Report!")
+    st.write("### Profile Generation")
+    st.write("Ready to generate your PreMed Profile!")
 
-    if st.button("Generate Report"):
+    if st.button("Generate Profile"):
         with st.spinner("Loading artifacts..."):
             artifacts = load_artifacts()
             if not artifacts:
@@ -336,7 +330,7 @@ else:
             # Save report
             report = save_report(template, {"sections": sections}, artifacts)
             if report:
-                st.success("Report generated successfully!")
+                st.success("Profile generated successfully!")
                 st.session_state.current_report = report
                 st.rerun()
             else:

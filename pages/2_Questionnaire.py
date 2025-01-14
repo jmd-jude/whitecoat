@@ -14,7 +14,7 @@ supabase: Client = create_client(
 
 # Page config
 st.set_page_config(
-    page_title="Pre-Med Gap Analysis - WhiteCoat",
+    page_title="WhiteCoat Questionnaire",
     page_icon="📝",
     initial_sidebar_state="expanded"
 )
@@ -25,7 +25,7 @@ if not st.session_state.get("authenticated", False):
     st.stop()
 
 # Title and introduction
-st.title("Pre-Med Gap Analysis Questionnaire")
+st.title("WhiteCoat Questionnaire")
 st.write("Please complete the questionnaire below to assess your current preparation level for medical school applications.")
 
 # Load previous responses if they exist
@@ -58,7 +58,7 @@ with st.form("premed_gap_analysis_form"):
     research_tasks = st.multiselect(
         "3. What type of research tasks do you primarily perform? (Check all that apply)",
         ["Wet Lab Work", "Data Analysis", "Clinical Research", "Literature Reviews or Writing", "Other"],
-        default=previous_responses.get("research_tasks", [])
+        default=previous_responses.get("types_of_research_tasks", [])
     )
 
     led_projects = st.radio(
@@ -188,6 +188,12 @@ with st.form("premed_gap_analysis_form"):
         index=["Firm timeline, must apply in target year", "Somewhat flexible, could delay 1 year if beneficial", "Very flexible, willing to optimize timing", "Already committed to specific gap year activities"].index(previous_responses.get("application_timing", "Firm timeline, must apply in target year"))
     )
 
+    academic_history = st.multiselect(
+        "25. Which of the following applies to your academic history? Select all that apply.",
+        ["I have transfer credits from a 4-year institution", "I have transfer credits from a community college", "I have AP/IB credits applied to my transcript", "I have courses completed at international institutions", "I have repeated one or more courses (e.g., due to grade replacement or retakes)", "I have incomplete or pending grades", "My transcript includes non-standard grading systems (e.g., Pass/Fail, percentages, distinctions)", "I followed a non-traditional or accelerated pathway (e.g., dual enrollment, gap years, summer-only courses)", "None of the above (standard academic record)"],
+        default=previous_responses.get("academic_history", [])
+    )
+
     # Submit button
     submitted = st.form_submit_button("Submit")
     if submitted:
@@ -196,7 +202,7 @@ with st.form("premed_gap_analysis_form"):
             form_responses = {
                 "research_hours": research_hours,
                 "weekly_research_hours": weekly_research_hours,
-                "research_tasks": research_tasks,
+                "types_of_research_tasks": research_tasks,
                 "led_projects": led_projects,
                 "research_outputs": research_outputs,
                 "high_school_clinical_hours": high_school_clinical_hours,
@@ -217,7 +223,8 @@ with st.form("premed_gap_analysis_form"):
                 "primary_focus": primary_focus,
                 "greatest_weakness": greatest_weakness,
                 "future_contribution": future_contribution,
-                "application_timing": application_timing
+                "application_timing": application_timing,
+                "academic_history": academic_history
             }
             
             # Save to Supabase
@@ -228,7 +235,7 @@ with st.form("premed_gap_analysis_form"):
             
             supabase.table("questionnaire_responses").upsert(data).execute()
             
-            st.success("Your responses have been saved successfully!")
+            st.success("Your responses have been saved!")
             
         except Exception as e:
             st.error(f"Error saving responses: {str(e)}")

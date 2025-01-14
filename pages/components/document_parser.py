@@ -261,7 +261,7 @@ def parse_document(file_data: bytes, file_type: str, doc_type: str) -> Tuple[Dic
         # First pass: Get AI reasoning and analysis
         print(f"Getting {doc_type} analysis with reasoning...")
         reasoning_response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": reasoning_prompt},
                 {"role": "user", "content": f"Here is the {doc_type} content:\n\n{text_content}"}
@@ -272,7 +272,7 @@ def parse_document(file_data: bytes, file_type: str, doc_type: str) -> Tuple[Dic
         # Second pass: Get structured data
         print(f"Getting structured {doc_type} data...")
         structure_response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": structure_prompt},
                 {"role": "user", "content": f"Here is the {doc_type} content:\n\n{text_content}"}

@@ -16,7 +16,7 @@ supabase: Client = create_client(
 
 # Initialize OpenAI client
 openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-AI_MODEL = os.getenv("AI_MODEL", "gpt-4o")
+AI_MODEL_4o_mini = os.getenv("AI_MODEL_4o_mini", "gpt-4o")
 
 # Page config
 st.set_page_config(
@@ -94,15 +94,13 @@ def generate_initial_summary(documents, questionnaire_responses):
         
         # Generate summary using OpenAI
         response = openai_client.chat.completions.create(
-            model=AI_MODEL,
+            model=AI_MODEL_4o_mini,
             messages=[
                 {"role": "system", "content": """You are an expert pre-med advisor. Generate a concise summary of the applicant's profile based on their documents and questionnaire responses. Focus on:
                 1. Academic background and achievements
                 2. Research experience and impact
                 3. Clinical exposure and future plans
                 4. Key priorities and goals
-                
-                Format the summary as a personalized message that confirms understanding of their situation and asks if they'd like to clarify anything.
                 
                 The documents are provided in a structured format with:
                 - CV data (education, research, clinical, leadership)
@@ -112,7 +110,7 @@ def generate_initial_summary(documents, questionnaire_responses):
                 Use this structured data to create a more accurate and detailed summary."""},
                 {"role": "user", "content": json.dumps(context, indent=2)}
             ],
-            temperature=0.7
+            temperature=0.2
         )
         
         summary = response.choices[0].message.content
@@ -190,12 +188,12 @@ def handle_revision_chat(current_summary):
         
         # Get AI response
         response = openai_client.chat.completions.create(
-            model=AI_MODEL,
+            model=AI_MODEL_4o_mini,
             messages=[
                 {"role": "system", "content": "You are an expert pre-med advisor helping to revise a profile summary. Use the structured document data and questionnaire responses to provide accurate revisions."},
                 {"role": "user", "content": json.dumps(context, indent=2)}
             ],
-            temperature=0.7
+            temperature=0.2
         )
         
         # Add AI response
@@ -204,12 +202,12 @@ def handle_revision_chat(current_summary):
         
         # Generate revised summary
         revised_summary = openai_client.chat.completions.create(
-            model=AI_MODEL,
+            model=AI_MODEL_4o_mini,
             messages=[
                 {"role": "system", "content": "Based on the conversation and structured data, generate an updated version of the summary incorporating the user's feedback."},
                 {"role": "user", "content": json.dumps(context, indent=2)}
             ],
-            temperature=0.7
+            temperature=0.2
         )
         
         # Save and refresh

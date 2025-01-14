@@ -9,13 +9,15 @@ from openai import OpenAI
 load_dotenv()
 supabase = create_client(os.getenv("SUPABASE_URL", ""), os.getenv("SUPABASE_KEY", ""))
 openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-AI_MODEL = os.getenv("AI_MODEL", "gpt-4")
+AI_MODEL_4o_mini = os.getenv("AI_MODEL_4o_mini", "gpt-4")
+AI_MODEL_4o = os.getenv("AI_MODEL_4o", "gpt-4")
 
 # Page configuration
 st.set_page_config(
     page_title="Strategic Q&A - WhiteCoat",
     page_icon="💭",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
+    layout="wide"
 )
 
 # Initialize session states
@@ -115,12 +117,12 @@ def generate_question(approved_summary, question_number, previous_responses=None
         log_debug("Calling OpenAI API")
         
         response = openai_client.chat.completions.create(
-            model=AI_MODEL,
+            model=AI_MODEL_4o,
             messages=[
                 {"role": "system", "content": prompts[question_number]},
                 {"role": "user", "content": context_str}
             ],
-            temperature=0.7
+            temperature=0.5
         )
         
         log_debug("OpenAI API call completed")
@@ -201,7 +203,7 @@ def analyze_response(question, answer, approved_summary):
         
         log_debug("Calling OpenAI for analysis")
         response = openai_client.chat.completions.create(
-            model=AI_MODEL,
+            model=AI_MODEL_4o,
             messages=[
                 {"role": "system", "content": """You are an expert pre-med advisor. Analyze the applicant's response and provide:
                 1. Key insights from their answer
@@ -231,9 +233,6 @@ if not approved_summary:
     st.error("Please complete and approve your profile summary first.")
     st.stop()
 
-with st.expander("View Approved Summary"):
-    st.write(approved_summary["summary"])
-
 # Main Q&A flow
 if not st.session_state.qa_session:
     st.write("Ready to begin your Strategic Q&A Discussion.")
@@ -246,13 +245,6 @@ else:
     
     if current_q <= 3:
         st.write(f"Question {current_q} of 3")
-        
-        # Show previous responses
-        for resp in responses:
-            with st.expander(f"Question {resp['question_number']}", expanded=False):
-                st.write("Question:", resp["question_text"])
-                st.write("Your response:", resp["response_text"])
-                st.write("Analysis:", resp["analysis_text"])
         
         # Generate and display current question
         if st.session_state.needs_question:
@@ -313,8 +305,5 @@ else:
     # Show final state for completed sessions
     if st.session_state.qa_session and st.session_state.qa_session["status"] == "complete":
         st.success("✅ Strategic Discussion Complete!")
-        for resp in responses:
-            with st.expander(f"Question {resp['question_number']}", expanded=True):
-                st.write("Question:", resp["question_text"])
-                st.write("Your response:", resp["response_text"])
-                st.write("Analysis:", resp["analysis_text"])
+        if st.button("Proceed to Final Profile"):
+                    st.switch_page("pages/5_Report.py")

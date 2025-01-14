@@ -32,7 +32,7 @@ if not st.session_state.get("authenticated", False):
 
 # Header
 st.title("Upload Your Documents")
-st.write("Upload your CV and transcript to get started")
+st.write("Upload your CV/Resume and transcript to get started")
 
 def upload_and_analyze(file, doc_type: str, is_replacement: bool = False):
     """Upload file to storage and analyze content."""
@@ -166,35 +166,33 @@ def upload_and_analyze(file, doc_type: str, is_replacement: bool = False):
 col1, col2 = st.columns(2)
 
 with col1:
-    st.write("### CV")
+    st.write("### CV/Resume")
     
     # Check if CV exists
     cv = supabase.table("user_documents").select("*").eq("user_id", st.session_state.user.id).eq("document_type", "cv").execute()
     has_cv = bool(cv.data)
     
     if has_cv:
-        st.success("CV uploaded!", icon="✅")
+        st.success("CV/Resume uploaded!", icon="✅")
         
         # Show analysis status
         analysis = supabase.table("document_analysis").select("*").eq("document_id", cv.data[0]["id"]).execute()
         if analysis.data:
             if analysis.data[0]["status"] == "complete":
-                st.info("CV analyzed successfully")
-                with st.expander("View Analysis"):
-                    st.json(analysis.data[0]["parsed_data"])
+                st.info("CV/Resume analyzed successfully")
             elif analysis.data[0]["status"] == "error":
-                st.warning(f"Error analyzing CV: {analysis.data[0]['error_message']}")
+                st.warning(f"Error analyzing CV/Resume: {analysis.data[0]['error_message']}")
             else:
-                st.info("CV analysis in progress...")
+                st.info("CV/Resume analysis in progress...")
         
         # Replace CV section
-        uploaded_cv = st.file_uploader("Replace CV", type=["pdf", "docx", "doc"], key="cv_replace")
-        if uploaded_cv and st.button("Upload and Process New CV"):
+        uploaded_cv = st.file_uploader("Replace CV/Resume", type=["pdf", "docx", "doc"], key="cv_replace")
+        if uploaded_cv and st.button("Upload and Process New CV/Resume"):
             upload_and_analyze(uploaded_cv, "cv", is_replacement=True)
     else:
         # New CV upload section
-        uploaded_cv = st.file_uploader("Upload CV", type=["pdf", "docx", "doc"], key="cv_new")
-        if uploaded_cv and st.button("Upload and Process CV"):
+        uploaded_cv = st.file_uploader("Upload CV/Resume", type=["pdf", "docx", "doc"], key="cv_new")
+        if uploaded_cv and st.button("Upload and Process CV/Resume"):
             upload_and_analyze(uploaded_cv, "cv", is_replacement=False)
 
 with col2:
@@ -212,8 +210,6 @@ with col2:
         if analysis.data:
             if analysis.data[0]["status"] == "complete":
                 st.info("Transcript analyzed successfully")
-                with st.expander("View Analysis"):
-                    st.json(analysis.data[0]["parsed_data"])
             elif analysis.data[0]["status"] == "error":
                 st.warning(f"Error analyzing transcript: {analysis.data[0]['error_message']}")
             else:

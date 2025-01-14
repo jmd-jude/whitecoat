@@ -3,6 +3,7 @@ import streamlit as st
 from supabase import create_client, Client
 from dotenv import load_dotenv
 from pages.components.auth import render_auth_ui, render_user_menu
+from pathlib import Path
 
 # Load environment variables
 load_dotenv()
@@ -20,6 +21,11 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     layout="centered"
 )
+
+# Show logo
+logo_path = Path(__file__).parent / 'assets' / 'logo.png'
+if logo_path.exists():
+    st.sidebar.image(str(logo_path), width=200)
 
 # Render user menu in sidebar
 render_user_menu(supabase)
@@ -70,12 +76,18 @@ else:
     
     with col1:
         st.write(f"Transcript: {'✅' if has_transcript else '⏳'}")
+        if st.button("Proceed to Document Upload page", key="upload_transcript"):
+                st.switch_page("pages/1_Document_Upload.py")
     
     with col2:
         st.write(f"Resume: {'✅' if has_resume else '⏳'}")
+        if st.button("Proceed to Document Upload page", key="upload_resume"):
+                st.switch_page("pages/1_Document_Upload.py")
     
     with col3:
         st.write(f"Questionnaire: {'✅' if has_questionnaire else '⏳'}")
+        if st.button("Proceed to Questionnaire page", key="start_questionnaire"):
+                st.switch_page("pages/2_Questionnaire.py")
     
     # Show next step if all complete
     if has_transcript and has_resume and has_questionnaire:

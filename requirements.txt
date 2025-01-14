@@ -1,6 +1,9 @@
 streamlit==1.29.0
 supabase==2.0.3
 python-dotenv==1.0.0
-pytz==2023.3.post1
+pypdf2==3.0.1
+ptz==2023.3.post1
 requests==2.31.0
 openai==1.6.1
+typing_extensions==4.8.0
+python-io==0.3

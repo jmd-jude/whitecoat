@@ -19,7 +19,7 @@ supabase: Client = create_client(
 st.set_page_config(
     page_title="Document Upload - WhiteCoat",
     page_icon="📄",
-    layout="centered"
+    layout="wide"
 )
 
 # Check authentication
@@ -228,17 +228,3 @@ with col2:
         uploaded_transcript = st.file_uploader("Upload Transcript", type=["pdf", "docx", "doc"], key="transcript_new")
         if uploaded_transcript and st.button("Upload and Process Transcript"):
             upload_and_analyze(uploaded_transcript, "transcript", is_replacement=False)
-
-# Navigation
-st.write("---")
-col1, col2 = st.columns(2)
-
-with col1:
-    if st.button("⬅️ Back to Welcome", use_container_width=True):
-        st.experimental_set_query_params()
-        st.rerun()
-        
-with col2:
-    if st.button("Continue to Questionnaire ➡️", use_container_width=True):
-        st.experimental_set_query_params(page="Questionnaire")
-        st.rerun()

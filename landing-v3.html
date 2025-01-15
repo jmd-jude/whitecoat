@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhiteCoat - Expert Pre-Med Guidance Made Accessible</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0efff',
+                            200: '#b8dfff',
+                            300: '#7cc7ff',
+                            400: '#38a7ff',
+                            500: '#2C5282', // Primary blue
+                            600: '#1A365D',
+                            700: '#0d2b4d',
+                            800: '#082042',
+                            900: '#041633',
+                        },
+                        accent: {
+                            500: '#38A169', // Green
+                            600: '#ED8936', // Orange
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-b from-brand-50 to-white">
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 justify-between items-center">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold text-brand-500">WhiteCoat</a>
+                </div>
+                <div class="hidden md:flex md:items-center md:space-x-6">
+                    <a href="#pain-points" class="text-base font-medium text-gray-500 hover:text-gray-900">Why WhiteCoat</a>
+                    <a href="#how-it-works" class="text-base font-medium text-gray-500 hover:text-gray-900">How It Works</a>
+                    <a href="#signup" class="inline-flex items-center px-4 py-2 text-base font-medium text-white bg-brand-500 hover:bg-brand-600 rounded-md">Start Free Analysis</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 bg-transparent sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                    <div class="sm:text-center lg:text-left">
+                        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                            <span class="block">Expert Pre-Med Guidance</span>
+                            <span class="block text-brand-500">Made Accessible</span>
+                        </h1>
+                        <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                            Expert pre-med guidance shouldn't be a privilege. It should be accessible to everyone. Start with just your transcript and CV.
+                        </p>
+                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start gap-4">
+                            <a href="#signup" class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 md:py-4 md:text-lg md:px-10">
+                                Start Free Analysis
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+            <div class="h-56 w-full bg-gradient-to-br from-brand-50 to-brand-100 sm:h-72 md:h-96 lg:w-full lg:h-full p-8 flex items-center justify-center">
+                <!-- Interactive Dashboard Preview -->
+                <div class="max-w-md w-full bg-white rounded-xl shadow-2xl p-6 transform hover:-translate-y-1 transition-all duration-300">
+                    <div class="space-y-6">
+                        <!-- Progress Header -->
+                        <div class="flex items-center justify-between">
+                            <div class="space-y-1">
+                                <div class="h-4 bg-brand-200 rounded w-32"></div>
+                                <div class="h-3 bg-brand-100 rounded w-24"></div>
+                            </div>
+                            <div class="h-10 w-10 rounded-full bg-accent-500 flex items-center justify-center text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Bars -->
+                        <div class="space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Documents Analyzed</span>
+                                    <span class="text-brand-500">100%</span>
+                                </div>
+                                <div class="h-2 bg-accent-500 rounded-full"></div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Profile Strength</span>
+                                    <span class="text-brand-500">75%</span>
+                                </div>
+                                <div class="h-2 bg-brand-300 rounded-full w-3/4"></div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Next Steps</span>
+                                    <span class="text-brand-500">50%</span>
+                                </div>
+                                <div class="h-2 bg-brand-200 rounded-full w-1/2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Action Items -->
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="h-5 w-5 rounded bg-accent-500 text-white flex items-center justify-center">✓</div>
+                                <div class="text-sm text-gray-600">Documents uploaded and analyzed</div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="h-5 w-5 rounded bg-brand-200 text-white flex items-center justify-center">2</div>
+                                <div class="text-sm text-gray-600">Complete profile assessment</div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="h-5 w-5 rounded bg-brand-200 text-white flex items-center justify-center">3</div>
+                                <div class="text-sm text-gray-600">Review personalized insights</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pain Points Section -->
+    <section id="pain-points" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900">What Students Face Today</h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    The path to medical school shouldn't be filled with uncertainty and financial barriers.
+                </p>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+                <!-- Expensive Advising -->
+                <div class="relative bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+                    <div class="px-6 py-8">
+                        <div class="absolute top-0 right-0 -mt-3 -mr-3 h-12 w-12 rounded-full bg-brand-100 flex items-center justify-center">
+                            <span class="text-2xl text-brand-500">$</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Expensive Advising</h3>
+                        <ul class="space-y-4 text-gray-600">
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                $200+ per hour consultations
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Limited access to experts
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Financial barrier to quality guidance
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Outdated Advice -->
+                <div class="relative bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+                    <div class="px-6 py-8">
+                        <div class="absolute top-0 right-0 -mt-3 -mr-3 h-12 w-12 rounded-full bg-brand-100 flex items-center justify-center">
+                            <span class="text-2xl text-brand-500">📚</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Outdated Advice</h3>
+                        <ul class="space-y-4 text-gray-600">
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Generic recommendations
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                One-size-fits-all approaches
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Limited data backing
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Overwhelming Choices -->
+                <div class="relative bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+                    <div class="px-6 py-8">
+                        <div class="absolute top-0 right-0 -mt-3 -mr-3 h-12 w-12 rounded-full bg-brand-100 flex items-center justify-center">
+                            <span class="text-2xl text-brand-500">🤔</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Overwhelming Choices</h3>
+                        <ul class="space-y-4 text-gray-600">
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Complex decisions
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Unclear priorities
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                No way to measure impact
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Overview -->
+    <section class="py-20 bg-brand-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900">The WhiteCoat Solution</h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    Simple to start, powerful results. Get the guidance you need in three easy steps.
+                </p>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+                <!-- Easy Start -->
+                <div class="bg-white rounded-lg shadow-lg p-8 transform hover:-translate-y-1 transition-all duration-300">
+                    <div class="h-12 w-12 rounded-md bg-brand-500 text-white flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Easy Start</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 text-accent-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Upload your transcript & CV
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 text-accent-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Answer a few key questions
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 text-accent-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Get immediate insights
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Powerful Analysis -->
+                <div class="bg-white rounded-lg shadow-lg p-8 transform hover:-translate-y-1 transition-all duration-300">
+                    <div class="h-12 w-12 rounded-md bg-accent-500 text-white flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Powerful Analysis</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 text-accent-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            AI-powered document analysis
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 text-accent-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Personal strength identification
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 text-accent-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Gap analysis & recommendations
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Continuous Guidance -->
+                <div class="bg-white rounded-lg shadow-lg p-8 transform hover:-translate-y-1 transition-all duration-300">
+                    <div class="h-12 w-12 rounded-md bg-accent-600 text-white flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Continuous Guidance</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 text-accent-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            24/7 strategic support
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 text-accent-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Progress tracking
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="h-5 w-5 text-accent-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Data-backed decisions
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Comparison -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900">Compare the Value</h2>
+                <p class="mt-4 text-xl text-gray-500">
+                    Get expert guidance without the premium price tag
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                <div class="bg-white rounded-lg border-2 border-gray-200 p-8">
+                    <h3 class="text-xl font-bold text-gray-900 text-center mb-4">Traditional Advising</h3>
+                    <p class="text-4xl font-bold text-center text-gray-900 mb-4">$2000+</p>
+                    <p class="text-gray-500 text-center">per semester</p>
+                </div>
+                <div class="bg-white rounded-lg border-2 border-gray-200 p-8">
+                    <h3 class="text-xl font-bold text-gray-900 text-center mb-4">Online Courses</h3>
+                    <p class="text-4xl font-bold text-center text-gray-900 mb-4">$500+</p>
+                    <p class="text-gray-500 text-center">per course</p>
+                </div>
+                <div class="bg-brand-500 rounded-lg p-8 text-white transform scale-105">
+                    <h3 class="text-xl font-bold text-center mb-4">WhiteCoat</h3>
+                    <p class="text-4xl font-bold text-center mb-4">Affordable</p>
+                    <p class="text-center">monthly access</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Email Capture -->
+    <section id="signup" class="py-20 bg-brand-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900">Join the Waitlist</h2>
+                <p class="mt-4 text-lg text-gray-500">
+                    Get early access and special founding member pricing.
+                </p>
+            </div>
+
+            <div class="mt-12 max-w-lg mx-auto">
+                <div class="bg-white shadow-xl rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <form id="signup-form" class="space-y-4">
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <input type="text" 
+                                       id="firstName" 
+                                       name="firstName" 
+                                       required 
+                                       class="block w-full text-lg py-6 px-4 rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500" 
+                                       placeholder="First Name">
+                                <input type="text" 
+                                       id="lastName" 
+                                       name="lastName" 
+                                       required 
+                                       class="block w-full text-lg py-6 px-4 rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500" 
+                                       placeholder="Last Name">
+                            </div>
+                            <input type="email" 
+                                   id="email" 
+                                   name="email" 
+                                   required 
+                                   class="block w-full text-lg py-6 px-4 rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500" 
+                                   placeholder="Enter your email">
+                            <button type="submit" 
+                                    class="w-full flex justify-center py-6 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                                Join the Waitlist
+                            </button>
+                        </form>
+                        <p class="mt-4 text-sm text-gray-500 text-center">
+                            Limited spots available. No credit card required.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+
+            try {
+                const response = await fetch('https://formspree.io/f/mgvvnqjb', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ firstName, lastName, email }),
+                });
+
+                if (response.ok) {
+                    Toastify({
+                        text: "You're on the list! Thank you for joining WhiteCoat's early access program.",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "center",
+                        style: {
+                            background: "linear-gradient(to right, #4CAF50, #45a049)",
+                        }
+                    }).showToast();
+                    document.getElementById('firstName').value = '';
+                    document.getElementById('lastName').value = '';
+                    document.getElementById('email').value = '';
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                Toastify({
+                    text: "Something went wrong. Please try again.",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                    }
+                }).showToast();
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
+            <div class="flex justify-center space-x-6 md:order-2">
+                <p class="text-base text-gray-400">
+                    Expert pre-med guidance shouldn't be a privilege. It should be accessible to everyone.
+                </p>
+            </div>
+            <div class="mt-8 md:mt-0 md:order-1">
+                <p class="text-center text-base text-gray-400">
+                    © <script>document.write(new Date().getFullYear())</script> WhiteCoat. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

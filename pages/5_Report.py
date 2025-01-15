@@ -256,7 +256,41 @@ st.title("PreMed Profile Report")
 # Get latest report
 report = get_latest_report()
 
-if report and report["status"] == "draft":
+# Check if we're forcing a new generation
+if st.session_state.get("force_generate"):
+    # Clear the flag
+    del st.session_state.force_generate
+    # Load template and start generation
+    template = get_active_template()
+    if template:
+        with st.spinner("Loading artifacts..."):
+            artifacts = load_artifacts()
+            if artifacts:
+                # Generate each section
+                sections = []
+                progress_bar = st.progress(0)
+                status_text = st.empty()
+                
+                for i, section in enumerate(template["sections"]["sections"]):
+                    status_text.write(f"Generating {section['name']}...")
+                    content = generate_section(section, artifacts)
+                    if content:
+                        sections.append({
+                            "name": section["name"],
+                            "content": content
+                        })
+                    progress_bar.progress((i + 1) / len(template["sections"]["sections"]))
+                
+                if len(sections) == len(template["sections"]["sections"]):
+                    # Save report
+                    report = save_report(template, {"sections": sections}, artifacts)
+                    if report:
+                        st.success("Profile generated successfully!")
+                        st.session_state.current_report = report
+                        st.rerun()
+                    else:
+                        st.error("Error saving report.")
+elif report and report["status"] == "draft":
     st.info("📝 Draft Report")
     
     # Show report preview
@@ -285,8 +319,11 @@ elif report and report["status"] == "final":
     if check_artifacts_updated(report["created_at"]):
         st.info("📝 Your profile information has been updated")
         if st.button("🔄 Regenerate Profile with Latest Updates"):
+            # Clear session state and force new generation
             if "current_report" in st.session_state:
                 del st.session_state.current_report
+            # Force back to generation state
+            st.session_state.force_generate = True
             st.rerun()
 
 else:

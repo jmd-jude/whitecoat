@@ -264,20 +264,10 @@ if current_summary:
             if st.session_state.get("revising", False):
                 handle_revision_chat(current_summary)
         
-        else:  # Summary is approved
+        else:
             st.success("✅ Summary Approved")
-            
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button("Generate New Summary"):
-                    st.session_state.messages = []  # Clear chat history
-                    documents, responses = load_user_data()
-                    if generate_initial_summary(documents, responses):
-                        st.rerun()
-            
-            with col2:
-                if st.button("Proceed to Q&A"):
-                    st.switch_page("pages/4_Strategic_QA.py")
+            if st.button("Proceed to Q&A"):
+                st.switch_page("pages/4_Strategic_QA.py")
 
 else:
     # No summary exists yet

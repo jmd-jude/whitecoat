@@ -224,6 +224,32 @@ def finalize_report(report_id):
         st.error(f"Error finalizing report: {str(e)}")
         return None
 
+def check_artifacts_updated(report_date):
+    """Check if any artifacts are newer than the report."""
+    try:
+        # Get latest dates from each artifact type
+        doc_analysis = supabase.table("document_analysis").select("created_at").eq("user_id", st.session_state.user.id).order("created_at", desc=True).limit(1).execute()
+        questionnaire = supabase.table("questionnaire_responses").select("created_at").eq("user_id", st.session_state.user.id).order("created_at", desc=True).limit(1).execute()
+        summary = supabase.table("ai_summaries").select("created_at").eq("user_id", st.session_state.user.id).order("created_at", desc=True).limit(1).execute()
+        qa_session = supabase.table("strategic_qa_sessions").select("updated_at").eq("user_id", st.session_state.user.id).order("updated_at", desc=True).limit(1).execute()
+        
+        # Get latest date from all artifacts
+        dates = []
+        if doc_analysis.data: dates.append(doc_analysis.data[0]["created_at"])
+        if questionnaire.data: dates.append(questionnaire.data[0]["created_at"])
+        if summary.data: dates.append(summary.data[0]["created_at"])
+        if qa_session.data: dates.append(qa_session.data[0]["updated_at"])
+        
+        if not dates:
+            return False
+            
+        latest_artifact = max(dates)
+        return latest_artifact > report_date
+        
+    except Exception as e:
+        print(f"Error checking artifact dates: {str(e)}")
+        return False
+
 # Main content
 st.title("PreMed Profile Report")
 
@@ -246,14 +272,7 @@ if report and report["status"] == "draft":
         if finalize_report(report["id"]):
             st.success("Profile saved!")
             st.rerun()
-    
-    # Regenerate option
-    if st.button("🔄 Regenerate Profile"):
-        # Clear report from session state
-        if "current_report" in st.session_state:
-            del st.session_state.current_report
-        st.rerun()
-
+            
 elif report and report["status"] == "final":
     st.success("✅ Final Profile")
     
@@ -261,6 +280,14 @@ elif report and report["status"] == "final":
     for section in report["content"]["sections"]:
         with st.expander(section["name"], expanded=True):
             st.write(section["content"])
+            
+    # Check if artifacts have been updated
+    if check_artifacts_updated(report["created_at"]):
+        st.info("📝 Your profile information has been updated")
+        if st.button("🔄 Regenerate Profile with Latest Updates"):
+            if "current_report" in st.session_state:
+                del st.session_state.current_report
+            st.rerun()
 
 else:
     # Check prerequisites

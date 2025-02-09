@@ -7,3 +7,4 @@ requests==2.31.0
 openai==1.6.1
 typing_extensions==4.8.0
 python-io==0.3
+plotly==5.19.0

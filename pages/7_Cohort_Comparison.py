@@ -85,7 +85,7 @@ with col2:
     data = {
         'Metric': ['Clinical Experience', 'Technical Skills', 'Leadership & Service', 
                 'Research Activities', 'Academic Rigor', 'Specialty Preparation'],
-        'Mission-Driven': [81, 64, 85, 75, 72, 93],
+        'Mission Oriented': [81, 64, 85, 75, 72, 93],
         'Patient-Centered': [81, 86, 79, 89, 76, 82],
         'Community-Clinical': [96, 69, 70, 88, 96, 90],
         'Clinical-Investigative': [71, 92, 88, 78, 93, 85],
@@ -98,7 +98,7 @@ with col2:
     # Create radio button for cohort selection
     selected_cohort = st.radio(
         "Select Cohort for Comparison:",
-        ['Mission-Driven', 'Patient-Centered', 'Community-Clinical', 'Clinical-Investigative', 'Research-Intensive']
+        ['Mission Oriented', 'Patient-Centered', 'Community-Clinical', 'Clinical-Investigative', 'Research-Intensive']
     )
 
     # Create radar chart
@@ -123,7 +123,7 @@ with col2:
         fill='toself',
         name='Pre-Med',
         opacity=0.5,
-        line=dict(color='#ff9999')  # Light red
+        line=dict(color='#00008B')  # Dark blue
     ))
 
     # Update layout

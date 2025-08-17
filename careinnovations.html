@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wayscribe: AI-Powered Expert Guidance for Health Equity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2d5aa0 0%, #1e3a8a 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .content {
+            padding: 3rem 2rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section h2 {
+            font-size: 1.8rem;
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section h3 {
+            font-size: 1.3rem;
+            color: #2d5aa0;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .section p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #0ea5e9;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .problem-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .solution-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .example-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .column {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #6366f1;
+        }
+        
+        .questions {
+            background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%);
+            border-left: 4px solid #8b5cf6;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .questions h3 {
+            color: #7c3aed;
+            margin-bottom: 1rem;
+        }
+        
+        .questions ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .questions li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .questions li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #8b5cf6;
+            font-weight: bold;
+        }
+        
+        ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .stat {
+            flex: 1;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Wayscribe</h1>
+            <p class="subtitle">AI-Powered Expert Guidance for Health Equity & Access</p>
+        </header>
+        
+        <main class="content">
+            <section class="section">
+                <h2>The Challenge We're Exploring</h2>
+                
+                <div class="problem-box">
+                    <p><strong>Complex systems create barriers to access.</strong> Whether it's navigating Medicaid eligibility, understanding IBD treatment protocols, or accessing specialized healthcare guidance, the people who need help most often face the steepest barriers to getting expert support.</p>
+                </div>
+                
+                <p>We've been building technology that transforms how subject matter experts share their knowledge at scale. While developing our platform, recent policy changes around Medicaid have us wondering: <strong>Could this approach help address some of the navigation challenges that make healthcare access so difficult for underserved populations?</strong></p>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-number">50</span>
+                        <span class="stat-label">Different State Systems</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">Millions</span>
+                        <span class="stat-label">Need Navigation Help</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">$$$</span>
+                        <span class="stat-label">Expert Consultation Cost</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Our Approach: Democratizing Expert Guidance</h2>
+                
+                <div class="solution-box">
+                    <p><strong>The core insight:</strong> Recent AI breakthroughs aren't just impressive chatbots—they're powerful new interfaces to previously hard-to-access unstructured knowledge. The key is curating and preparing expert knowledge in ways that AI can deliver meaningful, personalized guidance at scale.</p>
+                </div>
+                
+                <h3>How It Works</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <h4>Expert Knowledge Capture</h4>
+                        <p>We work with domain experts to digitize their methodologies, frameworks, and consultation approaches in ways optimized for AI delivery.</p>
+                    </div>
+                    <div class="column">
+                        <h4>Personalized AI Guidance</h4>
+                        <p>Users receive expert-level guidance tailored to their specific situation, available 24/7 at a fraction of traditional consultation costs.</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>Key Principle:</strong> We're not replacing human experts—we're amplifying their ability to help more people by making their expertise infinitely accessible while maintaining the quality and personalization of one-on-one consultation.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Real-World Example: IBD Nutrition Navigation</h2>
+                
+                <div class="example-box">
+                    <h3>The Challenge</h3>
+                    <p>Inflammatory Bowel Disease patients need highly personalized nutrition guidance, but dietitians with IBD expertise are scarce and expensive. Patients often wait months for appointments and struggle with generic advice that doesn't account for their specific symptoms, triggers, and lifestyle.</p>
+                    
+                    <h3>Our Solution</h3>
+                    <p>Working with IBD nutrition specialists, we've created an AI-powered consultation experience that provides expert-level, personalized guidance in real-time:</p>
+                    <ul>
+                        <li>Conducts thorough intake interviews accounting for individual symptoms and triggers</li>
+                        <li>Provides personalized meal planning and nutrition strategies</li>
+                        <li>Generates detailed action plans and monitoring tools</li>
+                        <li>Adapts recommendations as patients track their progress</li>
+                    </ul>
+                    
+                    <h3>The Impact</h3>
+                    <p>Rather than waiting months for specialist appointments or relying on generic online tools, patients receive immediate access to expert-level guidance that scales in ways that traditional one-on-one consultations simply cannot. This allows specialists to focus their direct time on the most complex cases requiring human intervention.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Potential Application: Medicaid Navigation</h2>
+                
+                <p>Medicaid systems share many characteristics that make them potentially well-suited for this approach:</p>
+                
+                <ul>
+                    <li><strong>Complex, context-specific rules:</strong> Eligibility requirements vary by state, family situation, income changes, and life circumstances</li>
+                    <li><strong>High-stakes decisions:</strong> People need accurate guidance to access essential healthcare</li>
+                    <li><strong>Existing expertise gap:</strong> There's a cottage industry of consultants and specialists, but not nearly enough to meet demand</li>
+                    <li><strong>Equity imperative:</strong> Those who most need help often have least access to expert guidance</li>
+                </ul>
+                
+                <div class="highlight-box">
+                    <p><strong>Our preliminary testing with Massachusetts Medicaid data</strong> suggests the platform could effectively guide people through eligibility questions, application processes, and benefit navigation—potentially making expert-level assistance available to anyone who needs it.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="questions">
+                    <h3>Questions We're Exploring</h3>
+                    <ul>
+                        <li>Which organizations are working on Medicaid navigation challenges that might benefit from this approach?</li>
+                        <li>What are the most critical pain points in Medicaid access that technology could help address?</li>
+                        <li>Who are the subject matter experts whose knowledge could be digitized to help more people?</li>
+                        <li>What would be the pathways to piloting this kind of solution—through CBOs, health centers, state agencies, or other channels?</li>
+                        <li>How do equity and justice considerations shape the design and deployment of AI-powered guidance tools?</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Our Background</h2>
+                <p>We're <strong>not</strong> healthcare or Medicaid experts. That's exactly why we're reaching out—we want to understand whether our technical approach could genuinely help address access challenges, and if so, how to do it in ways that center equity and serve the people who need it most.</p>
+                
+                <p>We're in early exploration mode, not sales mode. We're looking for conversations with people who understand these systems and can help us figure out if there's a meaningful opportunity to apply our platform for good.</p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
